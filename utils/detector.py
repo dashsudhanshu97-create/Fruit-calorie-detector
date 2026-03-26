@@ -1,13 +1,12 @@
 from ultralytics import YOLO
 from collections import Counter
 
-# load model once
 model = YOLO("yolov8n.pt")
 
 def detect_fruits(image):
-    results = model(image, conf=0.4)
+    results = model.predict(image, conf=0.4)
 
-    if len(results[0].boxes) == 0:
+    if results[0].boxes is None:
         return {}
 
     labels = results[0].boxes.cls.tolist()
